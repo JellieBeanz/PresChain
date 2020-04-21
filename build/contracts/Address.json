@@ -1,15 +1,15 @@
 {
   "contractName": "Address",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.12+commit.7709ece9\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"Collection of functions related to the address type\",\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/Shane/Documents/truffleProjects/TEST/contracts/Address.sol\":\"Address\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/Shane/Documents/truffleProjects/TEST/contracts/Address.sol\":{\"keccak256\":\"0x939ae0b0516d6caf54243d8c106309486c2c4e65ff9394f10e6f0f203d595ff9\",\"urls\":[\"bzz-raw://ada510a18a19038000a1c906b62d2f8e7ce595d1445baaadd709f437bb8ce61a\",\"dweb:/ipfs/QmSoQi4EKRxoYKNySnL8dfnuX8TiQGnHPxQ28eUNyo53fu\"]}},\"version\":1}",
-  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820a5b6bf975637c0beaa64e3e829aab7ae2af88a6d3c4981af340fbce82297a46564736f6c634300050c0032",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820a5b6bf975637c0beaa64e3e829aab7ae2af88a6d3c4981af340fbce82297a46564736f6c634300050c0032",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.12+commit.7709ece9\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"Collection of functions related to the address type\",\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/Shane/Documents/truffleProjects/Currenty Working Directory/PresChain/contracts/Address.sol\":\"Address\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/Shane/Documents/truffleProjects/Currenty Working Directory/PresChain/contracts/Address.sol\":{\"keccak256\":\"0x939ae0b0516d6caf54243d8c106309486c2c4e65ff9394f10e6f0f203d595ff9\",\"urls\":[\"bzz-raw://ada510a18a19038000a1c906b62d2f8e7ce595d1445baaadd709f437bb8ce61a\",\"dweb:/ipfs/QmSoQi4EKRxoYKNySnL8dfnuX8TiQGnHPxQ28eUNyo53fu\"]}},\"version\":1}",
+  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820d22e5b8cb596258148fcdd93a115de3791b166fd43e3c6c93ed1bc2fa091ffb164736f6c634300050c0032",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820d22e5b8cb596258148fcdd93a115de3791b166fd43e3c6c93ed1bc2fa091ffb164736f6c634300050c0032",
   "sourceMap": "98:2924:0:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
   "deployedSourceMap": "98:2924:0:-;;;;;;;;",
   "source": "pragma solidity ^0.5.5;\r\n\r\n/**\r\n * @dev Collection of functions related to the address type\r\n */\r\nlibrary Address {\r\n    /**\r\n     * @dev Returns true if `account` is a contract.\r\n     *\r\n     * [IMPORTANT]\r\n     * ====\r\n     * It is unsafe to assume that an address for which this function returns\r\n     * false is an externally-owned account (EOA) and not a contract.\r\n     *\r\n     * Among others, `isContract` will return false for the following\r\n     * types of addresses:\r\n     *\r\n     *  - an externally-owned account\r\n     *  - a contract in construction\r\n     *  - an address where a contract will be created\r\n     *  - an address where a contract lived, but was destroyed\r\n     * ====\r\n     */\r\n    function isContract(address account) internal view returns (bool) {\r\n        // According to EIP-1052, 0x0 is the value returned for not-yet created accounts\r\n        // and 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 is returned\r\n        // for accounts without code, i.e. `keccak256('')`\r\n        bytes32 codehash;\r\n        bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;\r\n        // solhint-disable-next-line no-inline-assembly\r\n        assembly { codehash := extcodehash(account) }\r\n        return (codehash != accountHash && codehash != 0x0);\r\n    }\r\n\r\n    /**\r\n     * @dev Converts an `address` into `address payable`. Note that this is\r\n     * simply a type cast: the actual underlying value is not changed.\r\n     *\r\n     * _Available since v2.4.0._\r\n     */\r\n    function toPayable(address account) internal pure returns (address payable) {\r\n        return address(uint160(account));\r\n    }\r\n\r\n    /**\r\n     * @dev Replacement for Solidity's `transfer`: sends `amount` wei to\r\n     * `recipient`, forwarding all available gas and reverting on errors.\r\n     *\r\n     * https://eips.ethereum.org/EIPS/eip-1884[EIP1884] increases the gas cost\r\n     * of certain opcodes, possibly making contracts go over the 2300 gas limit\r\n     * imposed by `transfer`, making them unable to receive funds via\r\n     * `transfer`. {sendValue} removes this limitation.\r\n     *\r\n     * https://diligence.consensys.net/posts/2019/09/stop-using-soliditys-transfer-now/[Learn more].\r\n     *\r\n     * IMPORTANT: because control is transferred to `recipient`, care must be\r\n     * taken to not create reentrancy vulnerabilities. Consider using\r\n     * {ReentrancyGuard} or the\r\n     * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].\r\n     *\r\n     * _Available since v2.4.0._\r\n     */\r\n    function sendValue(address payable recipient, uint256 amount) internal {\r\n        require(address(this).balance >= amount, \"Address: insufficient balance\");\r\n\r\n        // solhint-disable-next-line avoid-call-value\r\n        (bool success, ) = recipient.call.value(amount)(\"\");\r\n        require(success, \"Address: unable to send value, recipient may have reverted\");\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\Shane\\Documents\\truffleProjects\\TEST\\contracts\\Address.sol",
+  "sourcePath": "C:\\Users\\Shane\\Documents\\truffleProjects\\Currenty Working Directory\\PresChain\\contracts\\Address.sol",
   "ast": {
-    "absolutePath": "/C/Users/Shane/Documents/truffleProjects/TEST/contracts/Address.sol",
+    "absolutePath": "/C/Users/Shane/Documents/truffleProjects/Currenty Working Directory/PresChain/contracts/Address.sol",
     "exportedSymbols": {
       "Address": [
         74
@@ -600,7 +600,7 @@
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 2263,
+                                "referencedDeclaration": 2241,
                                 "src": "2746:4:0",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_contract$_Address_$74",
@@ -711,10 +711,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2252,
-                        2253
+                        2230,
+                        2231
                       ],
-                      "referencedDeclaration": 2253,
+                      "referencedDeclaration": 2231,
                       "src": "2730:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -950,10 +950,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2252,
-                        2253
+                        2230,
+                        2231
                       ],
-                      "referencedDeclaration": 2253,
+                      "referencedDeclaration": 2231,
                       "src": "2933:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1067,7 +1067,7 @@
     "src": "0:3024:0"
   },
   "legacyAST": {
-    "absolutePath": "/C/Users/Shane/Documents/truffleProjects/TEST/contracts/Address.sol",
+    "absolutePath": "/C/Users/Shane/Documents/truffleProjects/Currenty Working Directory/PresChain/contracts/Address.sol",
     "exportedSymbols": {
       "Address": [
         74
@@ -1658,7 +1658,7 @@
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 2263,
+                                "referencedDeclaration": 2241,
                                 "src": "2746:4:0",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_contract$_Address_$74",
@@ -1769,10 +1769,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2252,
-                        2253
+                        2230,
+                        2231
                       ],
-                      "referencedDeclaration": 2253,
+                      "referencedDeclaration": 2231,
                       "src": "2730:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2008,10 +2008,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2252,
-                        2253
+                        2230,
+                        2231
                       ],
-                      "referencedDeclaration": 2253,
+                      "referencedDeclaration": 2231,
                       "src": "2933:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2130,7 +2130,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-29T19:37:56.263Z",
+  "updatedAt": "2020-04-21T15:28:13.996Z",
   "devdoc": {
     "details": "Collection of functions related to the address type",
     "methods": {}

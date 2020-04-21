@@ -9,14 +9,12 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
 
 
-    // Token name
-
-    string public name_ = "CryptoPres";
 
 
-    // Token symbol
+    // Token name "CryptoPres";
 
-    string public symbol_ = "PRES";
+
+    // Token symbol "PRES";
 
 
     // Mapping from owner to list of owned token IDs
@@ -70,36 +68,6 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
     function mint(address _to, uint256 _id) external onlyDoctor {
 
         _mint(_to, _id);
-
-    }
-
-
-    /**
-
-     * @dev Gets the token name
-
-     * @return string representing the token name
-
-     */
-
-    function name() external view returns (string memory) {
-
-        return name_;
-
-    }
-
-
-    /**
-
-     * @dev Gets the token symbol
-
-     * @return string representing the token symbol
-
-     */
-
-    function symbol() external view returns (string memory) {
-
-        return symbol_;
 
     }
 
@@ -254,9 +222,9 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
     }
 
 
-    function addprescriptionData(uint _presId, string memory _drugName, string memory _drugCode) public {
+    function addprescriptionData(uint _presId, string memory _drugName, string memory _drugCode) public onlyDoctor{
 
-            require(ownerOf(_presId) == msg.sender,"addprescriptionData");
+            require(doctor == msg.sender,"addprescriptionData");
 
             prescriptionData[_presId].drugName = _drugName;
 
@@ -269,7 +237,7 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
 
 
-    function getprescriptionData(uint _presId) public view returns(string memory drugName, string memory drugCode){
+    function getprescriptionData(uint _presId) public view returns(string memory drugName, string memory drugCode) {
 
         require(_exists(_presId),"getprescriptionData");
 

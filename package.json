@@ -1,7 +1,6 @@
 {
   "name": "test",
   "version": "1.0.0",
-  "description": "",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -14,5 +13,15 @@
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.0.32",
     "truffle-hdwallet-provider": "^1.0.17"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JellieBeanz/PresChain.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JellieBeanz/PresChain/issues"
+  },
+  "homepage": "https://github.com/JellieBeanz/PresChain#readme",
+  "description": ""
 }
