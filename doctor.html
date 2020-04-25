@@ -18,7 +18,7 @@
   <body>
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
-        <h1 class="display-4">PresChain - Contract Creator</h1>
+        <h1 class="display-4">PresChain - Doctor Interface</h1>
         <p class="lead">Prescriptions on a blockchain</p>
       </div>
       <div>
@@ -34,13 +34,41 @@
     <a href="./index.html">Creator</a>
     <a href="./doctor.html">Doctor</a>
     <div class="container">
-
       <div>
-        <h2>Set Doctor</h2>
+        <h2>Generate Prescription Token</h2>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="doc_address_input" placeholder="Wallet address" >
+          <input type="text" class="form-control" id="address_input" placeholder="Wallet address" >
         </div>
-        <button type="button" id="set_doctor_button" class="btn btn-primary">Set Doctor</button>
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" id="id_input" placeholder="ID">
+        </div>
+        <button type="button" id="mint_token_button" class="btn btn-primary">Mint</button>
+      </div>
+      <div>
+        <h2>Add Prescription Data</h2>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="add_data_id" placeholder="Prescription ID" >
+        </div>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="add_data_name" placeholder="Drug Name">
+        </div>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="add_data_drugCode" placeholder="Drug Code" >
+        </div>
+        <button type="button" id="add_data_button" class="btn btn-primary">Add Data</button>
+      </div>
+      <div>
+        <h2>Get Prescription Data</h2>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="get_data_id" placeholder="Prescription ID" >
+        </div>
+        <div>
+          Drug Name: <span id="drugName_output"></span>
+        </div>
+        <div>
+          Drug Code: <span id="drugCode_output"></span>
+        </div>
+        <button type="button" id="get_data_button" class="btn btn-primary">Get Data</button>
       </div>
       <div>
         <h2>Get Doctor Address</h2>
@@ -48,13 +76,6 @@
           Name: <span id="doc_address_output"></span>
         </div>
         <button type="button" id="get_doctor_button" class="btn btn-primary">Get Doctor</button>
-      </div>
-      <div>
-        <h2>Prescriptions Prescribed</h2>
-        <div>
-          Number: <span id="pres_num_output"></span>
-        </div>
-        <button type="button" id="pres_num_button" class="btn btn-primary">Number of Prescrictions</button>
       </div>
     </div>
 
