@@ -223,7 +223,7 @@ var abi = [
   {
     "constant": true,
     "inputs": [],
-    "name": "name_",
+    "name": "name",
     "outputs": [
       {
         "internalType": "string",
@@ -400,7 +400,7 @@ var abi = [
   {
     "constant": true,
     "inputs": [],
-    "name": "symbol_",
+    "name": "symbol",
     "outputs": [
       {
         "internalType": "string",
@@ -542,36 +542,6 @@ var abi = [
   },
   {
     "constant": true,
-    "inputs": [],
-    "name": "name",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "symbol",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
     "inputs": [
       {
         "internalType": "address",
@@ -678,11 +648,6 @@ var abi = [
     "constant": false,
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_presId",
-        "type": "uint256"
-      },
-      {
         "internalType": "string",
         "name": "_drugName",
         "type": "string"
@@ -691,6 +656,26 @@ var abi = [
         "internalType": "string",
         "name": "_drugCode",
         "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_dosage",
+        "type": "string"
+      }
+    ],
+    "name": "addprescriptionDatatoArray",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_presId",
+        "type": "uint256"
       }
     ],
     "name": "addprescriptionData",
@@ -711,14 +696,26 @@ var abi = [
     "name": "getprescriptionData",
     "outputs": [
       {
-        "internalType": "string",
-        "name": "drugName",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "drugCode",
-        "type": "string"
+        "components": [
+          {
+            "internalType": "string",
+            "name": "drugName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "drugCode",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "dosage",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct CryptoPres.Data[]",
+        "name": "_array",
+        "type": "tuple[]"
       }
     ],
     "payable": false,

@@ -2,6 +2,8 @@
 
 pragma solidity ^0.5.12;
 
+pragma experimental ABIEncoderV2;
+
 import "./ERC721Full.sol";
 import "./Ownable.sol";
 
@@ -48,11 +50,15 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
         string drugCode;
 
+        string dosage;
+
     }
 
+    Data[] dataArray;
 
 
-    mapping(uint256 => Data) internal prescriptionData;
+
+    mapping(uint256 => Data[]) internal prescriptionData;
 
 
     /**
@@ -221,30 +227,26 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     }
 
+    function addprescriptionDatatoArray(string memory _drugName, string memory _drugCode, string memory _dosage) public onlyDoctor{
+        Data memory d = Data(_drugName,_drugCode,_dosage);
+        dataArray.push(d);
+    }
 
-    function addprescriptionData(uint _presId, string memory _drugName, string memory _drugCode) public onlyDoctor{
+
+    function addprescriptionData(uint _presId) public onlyDoctor{
 
             require(doctor == msg.sender,"addprescriptionData");
 
-            prescriptionData[_presId].drugName = _drugName;
-
-            prescriptionData[_presId].drugCode = _drugCode;
-
+            prescriptionData[_presId] = dataArray;
+            delete dataArray;
 
 
 
     }
 
-
-
-    function getprescriptionData(uint _presId) public view returns(string memory drugName, string memory drugCode) {
-
+    function getprescriptionData(uint _presId) public view returns(Data[] memory _array){
         require(_exists(_presId),"getprescriptionData");
-
-        drugName = prescriptionData[_presId].drugName;
-
-        drugCode = prescriptionData[_presId].drugCode;
-
+        _array = prescriptionData[_presId];
     }
 
 }
