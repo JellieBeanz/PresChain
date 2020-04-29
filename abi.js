@@ -648,37 +648,27 @@ var abi = [
     "constant": false,
     "inputs": [
       {
-        "internalType": "string",
-        "name": "_drugName",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_drugCode",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_dosage",
-        "type": "string"
-      }
-    ],
-    "name": "addprescriptionDatatoArray",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "_presId",
         "type": "uint256"
+      },
+      {
+        "internalType": "string[]",
+        "name": "_drugName",
+        "type": "string[]"
+      },
+      {
+        "internalType": "string[]",
+        "name": "_drugCode",
+        "type": "string[]"
+      },
+      {
+        "internalType": "string[]",
+        "name": "_dosage",
+        "type": "string[]"
       }
     ],
-    "name": "addprescriptionData",
+    "name": "addprescriptionDatatoArrayBatch",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

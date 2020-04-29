@@ -226,21 +226,27 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
         super._mint(_to, _id);
 
     }
+    function addprescriptionDatatoArrayBatch(uint _presId,string[] memory _drugName, string[] memory _drugCode, string[] memory _dosage) public onlyDoctor{
+        require(_drugName.length == _drugCode.length && _drugCode.length == _dosage.length, "all arrays must be same length");
 
-    function addprescriptionDatatoArray(string memory _drugName, string memory _drugCode, string memory _dosage) public onlyDoctor{
+       for (uint i=0; i<_drugName.length; i++) {
+           addprescriptionDatatoArray(_drugName[i], _drugCode[i], _dosage[i]);
+        }
+        addprescriptionData(_presId);
+    }
+
+    function addprescriptionDatatoArray(string memory _drugName, string memory _drugCode, string memory _dosage) internal onlyDoctor{
         Data memory d = Data(_drugName,_drugCode,_dosage);
         dataArray.push(d);
     }
 
 
-    function addprescriptionData(uint _presId) public onlyDoctor{
+    function addprescriptionData(uint _presId) internal onlyDoctor{
 
             require(doctor == msg.sender,"addprescriptionData");
 
             prescriptionData[_presId] = dataArray;
             delete dataArray;
-
-
 
     }
 
