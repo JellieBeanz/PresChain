@@ -33,6 +33,7 @@
     </div>
     <a href="./index.html">Creator</a>
     <a href="./doctor.html">Doctor</a>
+    <a href="./patient.html">Patient</a>
     <div class="container">
       <div>
         <h2>Generate Prescription Token</h2>
@@ -69,14 +70,7 @@
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="get_data_id" placeholder="Prescription ID" >
         </div>
-        <div>
-          Drug Name: <span id="drugName_output"></span>
-        </div>
-        <div>
-          Drug Code: <span id="drugCode_output"></span>
-        </div>
-        <div>
-          Drug Dosage: <span id="drugDosage_output"></span>
+        <div id="output">
         </div>
         <button type="button" id="get_data_button" class="btn btn-primary">Get Data</button>
       </div>
@@ -88,6 +82,8 @@
         <button type="button" id="get_doctor_button" class="btn btn-primary">Get Doctor</button>
       </div>
     </div>
+  </br>
+  <br>
 
 
   </body>

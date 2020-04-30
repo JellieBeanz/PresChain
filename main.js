@@ -1,5 +1,6 @@
 var web3 = new Web3(Web3.givenProvider);
 var contractInstance;
+var connectedWal_address;
 var nameArray = [];
 var codeArray = [];
 var dosageArray = [];
@@ -7,18 +8,18 @@ var dosageArray = [];
 $(document).ready(function() {
   window.ethereum.enable().then(function(accounts){
     //declare the contract address
-    var contractAddress = "0xE3e276Ce2fCE0B0552d3F9AC0b0e72a255ce4dA5"
+    var contractAddress = "0x532e4169cc50930eff4ac6E7E830cF06ff9282df"
       //connect to the contract pass in the abi(methods from contract declared in HTML head) contract address and the account that deployed
+      connectedWal_address = accounts[0];
       //the contract ie. the contract owner now.
-        contractInstance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
+        contractInstance = new web3.eth.Contract(abi, contractAddress,{from: accounts[0]});
       //uncomment the below for development and testing purposes.
       console.log(contractInstance);
       getOwner()
       //display the contracct address
       $("#contract_address").text(contractAddress)
       //display the connected wallet's address
-      $("#connectedWal_address").text(contractInstance._provider.selectedAddress)
-
+      $("#connectedWal_address").text(connectedWal_address)
   });
 
   //prescription number button
@@ -35,9 +36,26 @@ $(document).ready(function() {
   $("#add_data_button").click(addprescriptionData)
   //get prescription data button
   $("#get_data_button").click(getprescriptionData)
+  //get my prescriptions button
+  $("#get_mypres_button").click(getmyprescriptions)
+
+  $("#get_mypres_data").click(getprescriptionDataCust)
 
 });
 
+function getmyprescriptions(){
+  contractInstance.methods.arrayOfPrescriptionsByAddress(connectedWal_address).call().then(function(res){
+    console.log(res);
+    $("#my_pres_output").text("")
+    res.forEach(element => {
+
+        document.querySelector("#my_pres_output").innerHTML
+          += '<button id="element" onclick="getprescriptionDataCust()">' + element + '</button>'
+          getprescriptionDataCust(element);
+    });
+
+  })
+}
 
 function addDatatoArray(){
   var name = $("#add_data_name").val();
@@ -49,11 +67,24 @@ function addDatatoArray(){
   dosageArray.push(dosage);
   console.log(nameArray, codeArray, dosageArray);
 
-  // contractInstance.methods.addprescriptionDatatoArray(name, code, dosage).send()
-  // .on("confirmation", function(confirmationNr){
-  //   consol.log(confirmationNr);
-  // })
+}
 
+function getprescriptionDataCust(e){
+  $("#output_cust").text("");
+  var id = 1;
+  console.log("called" + id);
+  contractInstance.methods.getprescriptionData(id).call().then(function(res){
+    console.log(res)
+
+      res.forEach(element => {
+          document.getElementById("output_cust").innerHTML
+            += '<p> Name:' + element.drugName + '</p>' +
+               '<p> drugCode:' + element.drugCode + '</p>' +
+               '<p> dosage:' + element.dosage + '</p>';
+      });
+
+
+  })
 }
 
 function addprescriptionData(){
@@ -66,12 +97,18 @@ function addprescriptionData(){
 }
 
 function getprescriptionData(){
+  $("#output").text("");
   var id = $("#get_data_id").val();
   contractInstance.methods.getprescriptionData(id).call().then(function(res){
-    console.log(res[0])
-     $("#drugDosage_output").text(res[0].dosage)
-     $("#drugName_output").text(res[0].drugName)
-     $("#drugCode_output").text(res[0].drugCode)
+    console.log(res)
+
+      res.forEach(element => {
+          document.querySelector("#output").innerHTML
+            += '<p> Name:' + element.drugName + '</p>' +
+               '<p> drugCode:' + element.drugCode + '</p>' +
+               '<p> dosage:' + element.dosage + '</p>';
+
+      });
 
   })
 }

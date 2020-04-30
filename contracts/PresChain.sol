@@ -61,15 +61,7 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
     mapping(uint256 => Data[]) internal prescriptionData;
 
 
-    /**
 
-     * @dev External function to mint a new token
-
-     * @dev Reverts if the given token ID already exists
-
-     * @param _to address the beneficiary that will own the minted token
-
-     */
 
     function mint(address _to, uint256 _id) external onlyDoctor {
 
@@ -225,8 +217,10 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
         super._mint(_to, _id);
 
+        ownedPrescriptions[_to].push(_id);
+
     }
-    function addprescriptionDatatoArrayBatch(uint _presId,string[] memory _drugName, string[] memory _drugCode, string[] memory _dosage) public onlyDoctor{
+    function addprescriptionDatatoArrayBatch(uint _presId, string[] memory _drugName, string[] memory _drugCode, string[] memory _dosage) public onlyDoctor{
         require(_drugName.length == _drugCode.length && _drugCode.length == _dosage.length, "all arrays must be same length");
 
        for (uint i=0; i<_drugName.length; i++) {
