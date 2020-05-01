@@ -198,10 +198,15 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     }
 
+    event PrescriptionData(Data[] _array);
+
     function destroy( uint256 _id) public {
+        Data[] memory _array = getprescriptionData(_id);
         address _owner = msg.sender;
         require(msg.sender == _owner);
         _burn(_owner,_id);
+
+       emit PrescriptionData(_array);
     }
 
     function transferPres(address _to, uint256 _tokenId) public{

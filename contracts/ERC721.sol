@@ -280,7 +280,6 @@ contract ERC721 is Context, ERC165, IERC721 {
         _ownedTokensCount[owner].decrement();
         _tokenOwner[tokenId] = address(0);
 
-        emit Transfer(owner, address(0), tokenId);
     }
 
     /**
