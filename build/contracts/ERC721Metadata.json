@@ -1210,10 +1210,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2313,
-                        2314
+                        2320,
+                        2321
                       ],
-                      "referencedDeclaration": 2314,
+                      "referencedDeclaration": 2321,
                       "src": "1903:7:7",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1475,7 +1475,7 @@
                                   "name": "abi",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 2297,
+                                  "referencedDeclaration": 2304,
                                   "src": "2319:3:7",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_magic_abi",
@@ -1761,10 +1761,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2313,
-                        2314
+                        2320,
+                        2321
                       ],
-                      "referencedDeclaration": 2314,
+                      "referencedDeclaration": 2321,
                       "src": "2795:7:7",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2181,7 +2181,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2349,
+                        "referencedDeclaration": 2356,
                         "src": "3930:5:7",
                         "typeDescriptions": {
                           "typeIdentifier": "t_super$_ERC721Metadata_$1410",
@@ -3326,10 +3326,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2313,
-                        2314
+                        2320,
+                        2321
                       ],
-                      "referencedDeclaration": 2314,
+                      "referencedDeclaration": 2321,
                       "src": "1903:7:7",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -3591,7 +3591,7 @@
                                   "name": "abi",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 2297,
+                                  "referencedDeclaration": 2304,
                                   "src": "2319:3:7",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_magic_abi",
@@ -3877,10 +3877,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2313,
-                        2314
+                        2320,
+                        2321
                       ],
-                      "referencedDeclaration": 2314,
+                      "referencedDeclaration": 2321,
                       "src": "2795:7:7",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -4297,7 +4297,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2349,
+                        "referencedDeclaration": 2356,
                         "src": "3930:5:7",
                         "typeDescriptions": {
                           "typeIdentifier": "t_super$_ERC721Metadata_$1410",
@@ -4635,7 +4635,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-04-30T16:53:36.174Z",
+  "updatedAt": "2020-05-01T20:08:05.326Z",
   "devdoc": {
     "methods": {
       "approve(address,uint256)": {

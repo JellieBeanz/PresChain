@@ -198,6 +198,18 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     }
 
+    function destroy( uint256 _id) public {
+        address _owner = msg.sender;
+        require(msg.sender == _owner);
+        _burn(_owner,_id);
+    }
+
+    function transferPres(address _to, uint256 _tokenId) public{
+     address from = msg.sender;
+     require(from == msg.sender);
+
+    _transferFrom(from, _to, _tokenId);
+    }
 
     /**
 
@@ -220,9 +232,9 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
         ownedPrescriptions[_to].push(_id);
 
     }
-    function addprescriptionDatatoArrayBatch(uint _presId, string[] memory _drugName, string[] memory _drugCode, string[] memory _dosage) public onlyDoctor{
+    function addprescriptionDatatoArrayBatch(address _to, uint _presId, string[] memory _drugName, string[] memory _drugCode, string[] memory _dosage) public onlyDoctor{
         require(_drugName.length == _drugCode.length && _drugCode.length == _dosage.length, "all arrays must be same length");
-
+        _mint(_to, _presId);
        for (uint i=0; i<_drugName.length; i++) {
            addprescriptionDatatoArray(_drugName[i], _drugCode[i], _dosage[i]);
         }

@@ -8,7 +8,7 @@ var dosageArray = [];
 $(document).ready(function() {
   window.ethereum.enable().then(function(accounts){
     //declare the contract address
-    var contractAddress = "0x532e4169cc50930eff4ac6E7E830cF06ff9282df"
+    var contractAddress = "0x1D3c7b03008b67b6b3c9c43EB4F82709cc365a69"
       //connect to the contract pass in the abi(methods from contract declared in HTML head) contract address and the account that deployed
       connectedWal_address = accounts[0];
       //the contract ie. the contract owner now.
@@ -29,7 +29,7 @@ $(document).ready(function() {
   //Get doctor button
   $("#get_doctor_button").click(getDoctor)
   //Mint button
-  $("#mint_token_button").click(mint)
+  $("#mint_token_button").click(addprescriptionData)
   //add data to an array
   $("#add_Data_To_Array_button").click(addDatatoArray)
   //add prescription data button
@@ -50,8 +50,7 @@ function getmyprescriptions(){
     res.forEach(element => {
 
         document.querySelector("#my_pres_output").innerHTML
-          += '<button id="element" onclick="getprescriptionDataCust()">' + element + '</button>'
-          getprescriptionDataCust(element);
+          += '<button value="'+element+'" onclick="getprescriptionDataCust(this)">' + element + '</button>'
     });
 
   })
@@ -65,19 +64,24 @@ function addDatatoArray(){
   nameArray.push(name);
   codeArray.push(code);
   dosageArray.push(dosage);
+  $("#add_data_name").val("");
+  $("#add_data_drugCode").val("");
+  $("#add_data_dosage").val("");
   console.log(nameArray, codeArray, dosageArray);
+
 
 }
 
 function getprescriptionDataCust(e){
+console.log(e);
   $("#output_cust").text("");
-  var id = 1;
-  console.log("called" + id);
+  var id = $(e).attr("value");
+
   contractInstance.methods.getprescriptionData(id).call().then(function(res){
     console.log(res)
 
       res.forEach(element => {
-          document.getElementById("output_cust").innerHTML
+          document.querySelector("#output_cust").innerHTML
             += '<p> Name:' + element.drugName + '</p>' +
                '<p> drugCode:' + element.drugCode + '</p>' +
                '<p> dosage:' + element.dosage + '</p>';
@@ -88,11 +92,14 @@ function getprescriptionDataCust(e){
 }
 
 function addprescriptionData(){
-  var id = $("#add_data_id").val();
+  var address = $("#address_input").val();
+  var id = $("#id_input").val();
 
-  contractInstance.methods.addprescriptionDatatoArrayBatch(id, nameArray, codeArray, dosageArray ).send()
+    console.log(address, id, nameArray, codeArray, dosageArray);
+
+  contractInstance.methods.addprescriptionDatatoArrayBatch(address, id, nameArray, codeArray, dosageArray ).send()
   .on("confirmation", function(confirmationNr){
-    consol.log(confirmationNr);
+    console.log(confirmationNr);
   })
 }
 
