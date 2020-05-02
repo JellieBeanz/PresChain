@@ -211,7 +211,6 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     function transferPres(address _to, uint256 _tokenId) public{
      address from = msg.sender;
-     require(from == msg.sender);
 
     _transferFrom(from, _to, _tokenId);
     }

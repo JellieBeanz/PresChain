@@ -1,85 +1,128 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>PresChain</title>
+  <!-- Icons font CSS-->
+  <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+  <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+  <!-- Font special for pages-->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 
-    <title>PresChain</title>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"></script>
-    <script type="text/javascript" src="./web3.min.js"></script>
-    <script type="text/javascript" src="./abi.js"></script>
-    <script type="text/javascript" src="./main.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- Vendor CSS-->
+  <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
+  <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
-  </head>
-  <body>
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-4">PresChain - Doctor Interface</h1>
-        <p class="lead">Prescriptions on a blockchain</p>
+  <!-- Main CSS-->
+  <link href="css/main.css" rel="stylesheet" media="all">
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="./web3.min.js"></script>
+  <script type="text/javascript" src="./abi.js"></script>
+  <script type="text/javascript" src="./main.js"></script>
+
+</head>
+<body>
+  <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+    <div class="wrapper wrapper--w790">
+      <div class="card card-5">
+      <div class="card-heading">
+      <h1 class="title">PresChain - Contract Creator</h1>
+      <p class="title">Prescriptions on a blockchain</p>
       </div>
-      <div>
-        Contract Address: <span id="contract_address"></span>
+
+    <div class="name" style="color:blue;text-align:center;">
+      Contract Address: <span id="contract_address"></span>
+    </div>
+    <div class="name" style="color:blue;text-align:center;">
+      Connected With: <span id="connectedWal_address"></span>
+    </div>
+    <div class="name" style="color:blue;text-align:center;">
+      Owner: <span id="owner_address"></span>
+    </div>
+    <div class="name" style="color:blue;text-align:center;">
+        <a href="./index.html">Creator</a>
+        <a href="./doctor.html">Doctor</a>
+        <a href="./patient.html">Patient</a>
+        <a href="./pharmacy.html">Pharmacy</a>
+    </div>
+
+    <div class="card-body">
+      <div class="form-row">
+        <h2 class="name">Add Drug to Prescription:</h2>
+        <div class="value">
+          <div class="row row-space">
+            <div class="col-2">
+              <input type="text" class="input--style-5 m-b-55" id="add_data_name" placeholder="Drug Name">
+            </div>
+            <div class="col-2">
+              <input type="text" class="input--style-5" id="add_data_drugCode" placeholder="Drug Code" >
+            </div>
+            <div class="col-2">
+              <input type="text" class="input--style-5" id="add_data_dosage" placeholder="Dosage" >
+            </div>
+            <div class="col-2">
+              <button type="button" id="add_Data_To_Array_button" class="btn btn--radius-2 btn--blue">Add Data</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        Connected With: <span id="connectedWal_address"></span>
+
+      <div class="form-row">
+        <h2 class="name">Generate Prescription Token</h2>
+        <div class="value">
+          <div class="row row-space">
+            <div class="col-2">
+              <input type="text" class="input--style-5" id="address_input" placeholder="Wallet address" >
+            </div>
+            <div class="col-2">
+              <input type="number" class="input--style-5" id="id_input" placeholder="ID">
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        Owner: <span id="owner_address"></span>
+      <div class="form-row">
+        <div class="name"></div>
+        <div class="value" >
+          <div style="text-align:right;margin-right: 92px;">
+            <button type="button" id="mint_token_button" class="btn btn--radius-2 btn--red">Mint</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <h2 class="name">Get Prescription Data</h2>
+        <div class="value">
+          <div class="row row-space">
+            <div class="col-2">
+              <input type="text" class="input--style-5" id="get_data_id" placeholder="Prescription ID" >
+            </div>
+            <div class="col-2">
+              <button type="button" id="get_data_button" class="btn btn--radius-2 btn--blue">Get Data</button>
+            </div>
+            <div id="output">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <h2 class="name">Get Doctor Address</h2>
+        <div class="row row-space">
+        <div class="value">
+          <span id="doc_address_output">Address: </span> totalSupply: <span id="pres_num_output"></span>
+
+        </div>
+        </div>
+      </div>
+        <button type="button" id="get_doctor_button" class="btn btn--radius-2 btn--blue">Get Info</button>
       </div>
     </div>
-    <a href="./index.html">Creator</a>
-    <a href="./doctor.html">Doctor</a>
-    <a href="./patient.html">Patient</a>
-    <a href="./pharmacy.html">Pharmacy</a>
-    <div class="container">
-
-      <div>
-        <h2>Add Prescription Data to Array</h2>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" id="add_data_name" placeholder="Drug Name">
-        </div>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" id="add_data_drugCode" placeholder="Drug Code" >
-        </div>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" id="add_data_dosage" placeholder="Dosage" >
-        </div>
-        <button type="button" id="add_Data_To_Array_button" class="btn btn-primary">Add Data</button>
-      </div>
-      <div>
-        <h2>Generate Prescription Token</h2>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" id="address_input" placeholder="Wallet address" >
-        </div>
-        <div class="input-group mb-3">
-          <input type="number" class="form-control" id="id_input" placeholder="ID">
-        </div>
-        <button type="button" id="mint_token_button" class="btn btn-primary">Mint</button>
-      </div>
-      <div>
-        <h2>Get Prescription Data</h2>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" id="get_data_id" placeholder="Prescription ID" >
-        </div>
-        <div id="output">
-        </div>
-        <button type="button" id="get_data_button" class="btn btn-primary">Get Data</button>
-      </div>
-      <div>
-        <h2>Get Doctor Address</h2>
-        <div>
-          Name: <span id="doc_address_output"></span>
-        </div>
-        <button type="button" id="get_doctor_button" class="btn btn-primary">Get Doctor</button>
-      </div>
-    </div>
-  </br>
-  <br>
-
+  </div>
+</div>
 
   </body>
 </html>

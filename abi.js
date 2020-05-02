@@ -1,4 +1,4 @@
-var abi =  [
+var abi = [
   {
     "anonymous": false,
     "inputs": [
@@ -66,6 +66,36 @@ var abi =  [
       }
     ],
     "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "drugName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "drugCode",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "dosage",
+            "type": "string"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct CryptoPres.Data[]",
+        "name": "_array",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "PrescriptionData",
     "type": "event"
   },
   {
@@ -642,6 +672,41 @@ var abi =  [
     ],
     "payable": false,
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "destroy",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferPres",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
