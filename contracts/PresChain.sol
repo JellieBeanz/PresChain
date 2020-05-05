@@ -18,6 +18,8 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     // Token symbol "PRES";
 
+    // Mapping from token ID to owner
+    mapping (uint256 => address) private tokenOwner;
 
     // Mapping from owner to list of owned token IDs
 
@@ -28,6 +30,8 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     mapping(uint256 => uint256) internal ownedPrescriptionsIndex;
 
+    // Mapping from owner to number of owned token
+    mapping (address => Counters.Counter) private ownedTokensCount;
 
     // Array with all token ids, used for enumeration
 
@@ -188,7 +192,7 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     function addPrescriptionTo(address _to, uint256 _presId) internal {
 
-        super._mint(_to, _presId);
+        _mint(_to, _presId);
 
         uint256 length = ownedPrescriptions[_to].length;
 
@@ -200,19 +204,88 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     event PrescriptionData(Data[] _array);
 
-    function destroy( uint256 _id) public {
-        Data[] memory _array = getprescriptionData(_id);
-        address _owner = msg.sender;
-        require(msg.sender == _owner);
-        _burn(_owner,_id);
 
-       emit PrescriptionData(_array);
+    function destroy(uint256 _id) public {
+        Data[] memory _array = getprescriptionData(_id);
+        address owner = msg.sender;
+
+        require(ownerOf(_id) == owner, "CryptoPres: burn of token that is not own");
+
+        ownedTokensCount[owner].decrement();
+        tokenOwner[_id] = address(0);
+
+        _removeTokenFromOwnerEnumeration(owner, _id);
+        // Since tokenId will be deleted, we can clear its slot in _ownedTokensIndex to trigger a gas refund
+        ownedPrescriptionsIndex[_id] = 0;
+
+        _removeTokenFromAllTokensEnumeration(_id);
+
+        emit PrescriptionData(_array);
     }
 
-    function transferPres(address _to, uint256 _tokenId) public{
-     address from = msg.sender;
+    function _removeTokenFromAllTokensEnumeration(uint256 tokenId) private {
+        // To prevent a gap in the tokens array, we store the last token in the index of the token to delete, and
+        // then delete the last slot (swap and pop).
 
-    _transferFrom(from, _to, _tokenId);
+        uint256 lastTokenIndex = allPrescriptions.length.sub(1);
+        uint256 tokenIndex = allPrescriptionsIndex[tokenId];
+
+        // When the token to delete is the last token, the swap operation is unnecessary. However, since this occurs so
+        // rarely (when the last minted token is burnt) that we still do the swap here to avoid the gas cost of adding
+        // an 'if' statement (like in _removeTokenFromOwnerEnumeration)
+        uint256 lastTokenId = allPrescriptions[lastTokenIndex];
+
+        allPrescriptions[tokenIndex] = lastTokenId; // Move the last token to the slot of the to-delete token
+        allPrescriptionsIndex[lastTokenId] = tokenIndex; // Update the moved token's index
+
+        // This also deletes the contents at the last position of the array
+        allPrescriptions.length--;
+        allPrescriptionsIndex[tokenId] = 0;
+
+    }
+
+
+
+    function transferPres(address _to, uint256 _tokenId) public{
+        address from = msg.sender;
+
+        require(ownerOf(_tokenId) == from, "CryptoPres: transfer of token that is not own");
+        require(_to != address(0), "CryptoPres: transfer to the zero address");
+
+        ownedTokensCount[from].decrement();
+        ownedTokensCount[_to].increment();
+
+        tokenOwner[_tokenId] = _to;
+
+        _removeTokenFromOwnerEnumeration(from, _tokenId);
+        _addTokenToOwnerEnumeration(_to, _tokenId);
+
+    }
+
+    function _exists(uint256 tokenId) internal view returns (bool) {
+        address owner = tokenOwner[tokenId];
+        return owner != address(0);
+    }
+
+     function ownerOf(uint256 tokenId) public view returns (address) {
+        address owner = tokenOwner[tokenId];
+        require(owner != address(0), "CryptoPres: owner query for nonexistent token");
+
+        return owner;
+    }
+
+    function _addTokenToOwnerEnumeration(address to, uint256 tokenId) private {
+        ownedPrescriptionsIndex[tokenId] = ownedPrescriptions[to].length;
+        ownedPrescriptions[to].push(tokenId);
+    }
+
+     /**
+     * @dev Private function to add a token to this extension's token tracking data structures.
+     * @param tokenId uint256 ID of the token to be added to the tokens list
+     */
+    function _addTokenToAllTokensEnumeration(uint256 tokenId) private {
+        allPrescriptionsIndex[tokenId] = allPrescriptions.length;
+        allPrescriptions.push(tokenId);
     }
 
     /**
@@ -227,15 +300,42 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     function _mint(address _to, uint256 _id) internal {
 
-        allPrescriptions.push(_id);
+        _addTokenToAllTokensEnumeration(_id);
 
-        allPrescriptionsIndex[_id] = _id;
+        _addTokenToOwnerEnumeration(_to, _id);
 
-        super._mint(_to, _id);
+        require(_to != address(0), "CryptoPres: mint to the zero address");
+        require(!_exists(_id), "CryptoPres: token already minted");
 
-        ownedPrescriptions[_to].push(_id);
+        tokenOwner[_id] = _to;
+        ownedTokensCount[_to].increment();
+
 
     }
+
+    function _removeTokenFromOwnerEnumeration(address from, uint256 tokenId) private {
+        // To prevent a gap in from's tokens array, we store the last token in the index of the token to delete, and
+        // then delete the last slot (swap and pop).
+
+        uint256 lastTokenIndex = ownedPrescriptions[from].length.sub(1);
+        uint256 tokenIndex = ownedPrescriptionsIndex[tokenId];
+
+        // When the token to delete is the last token, the swap operation is unnecessary
+        if (tokenIndex != lastTokenIndex) {
+            uint256 lastTokenId = ownedPrescriptions[from][lastTokenIndex];
+
+            ownedPrescriptions[from][tokenIndex] = lastTokenId; // Move the last token to the slot of the to-delete token
+            ownedPrescriptionsIndex[lastTokenId] = tokenIndex; // Update the moved token's index
+        }
+
+        // This also deletes the contents at the last position of the array
+        ownedPrescriptions[from].length--;
+
+        // Note that _ownedTokensIndex[tokenId] hasn't been cleared: it still points to the old slot (now occupied by
+        // lastTokenId, or just over the end of the array if the token was the last one).
+    }
+
+
     function addprescriptionDatatoArrayBatch(address _to, uint _presId, string[] memory _drugName, string[] memory _drugCode, string[] memory _dosage) public onlyDoctor{
         require(_drugName.length == _drugCode.length && _drugCode.length == _dosage.length, "all arrays must be same length");
         _mint(_to, _presId);
@@ -264,5 +364,7 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
         require(_exists(_presId),"getprescriptionData");
         _array = prescriptionData[_presId];
     }
+
+
 
 }

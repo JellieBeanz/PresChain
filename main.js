@@ -8,7 +8,7 @@ var dosageArray = [];
 $(document).ready(function() {
   window.ethereum.enable().then(function(accounts){
     //declare the contract address
-    var contractAddress = "0x4b51B1ADBA66e8554FF60897AD11Ee275f8Be0Cd"
+    var contractAddress = "0xB67e342DF263C271DEE65530e59e8FDdAB6fa665"
       //connect to the contract pass in the abi(methods from contract declared in HTML head) contract address and the account that deployed
       connectedWal_address = accounts[0];
       //the contract ie. the contract owner now.
@@ -41,7 +41,16 @@ $(document).ready(function() {
 
   $("#get_mypres_data").click(getprescriptionDataCust)
 
+  $("#burn_token_button").click(burnToken)
+
 });
+
+function burnToken(){
+  var id = $("#burn_token_id").val();
+
+  contractInstance.methods.destroy(id).send();
+
+  }
 
 function transfer(){
   var to = $("#pharmacyaddress_input").val();
@@ -49,10 +58,7 @@ function transfer(){
   contractInstance.methods.arrayOfPrescriptionsByAddress(connectedWal_address).call().then(function(res){
     console.log(res);
   })
-  contractInstance.methods.ownerOf(1).call().then(function(res){
-    console.log(res);
-  })
-  contractInstance.methods.transferFrom(connectedWal_address, to, id).send();
+  contractInstance.methods.transferPres( to, id).send();
   $("#pharmacyaddress_input").val("");
   $("#presid_input").val("");
 }
@@ -120,6 +126,9 @@ function addprescriptionData(){
   .on("confirmation", function(confirmationNr){
     console.log(confirmationNr);
   })
+  nameArray = [];
+  codeArray = [];
+  dosageArray = [];
 }
 
 function getprescriptionData(){
@@ -139,15 +148,15 @@ function getprescriptionData(){
   })
 }
 
-function mint(){
-  var address = $("#address_input").val();
-  var id = $("#id_input").val();
-
-  contractInstance.methods.mint(address, id).send()
-  .on("confirmation", function(confirmationNr){
-    consol.log(confirmationNr);
-  })
-}
+// function mint(){
+//   var address = $("#address_input").val();
+//   var id = $("#id_input").val();
+//
+//   contractInstance.methods.mint(address, id).send()
+//   .on("confirmation", function(confirmationNr){
+//     consol.log(confirmationNr);
+//   })
+// }
 
 function getOwner(){
   contractInstance.methods.owner().call().then(function(res){
