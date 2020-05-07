@@ -8,18 +8,29 @@ var dosageArray = [];
 $(document).ready(function() {
   window.ethereum.enable().then(function(accounts){
     //declare the contract address
-    var contractAddress = "0xB67e342DF263C271DEE65530e59e8FDdAB6fa665"
+    var contractAddress = "0xB3d33108Ef2B4c7979111D85b8Fe13593FA90686"
       //connect to the contract pass in the abi(methods from contract declared in HTML head) contract address and the account that deployed
       connectedWal_address = accounts[0];
       //the contract ie. the contract owner now.
         contractInstance = new web3.eth.Contract(abi, contractAddress,{from: accounts[0]});
       //uncomment the below for development and testing purposes.
-      console.log(contractInstance);
+      // console.log(contractInstance);
       getOwner()
       //display the contracct address
       $("#contract_address").text(contractAddress)
       //display the connected wallet's address
       $("#connectedWal_address").text(connectedWal_address)
+  });
+
+  var burnEvent = contractInstance.PrescriptionData();
+
+  burnEvent.watch(function(error, result){
+    if(!error){
+      $("#dataoutput").html(result.toString());
+    }
+    else{
+      console.log(error);
+    }
   });
 
   //prescription number button
@@ -38,35 +49,33 @@ $(document).ready(function() {
   $("#get_data_button").click(getprescriptionData)
   //get my prescriptions button
   $("#get_mypres_button").click(getmyprescriptions)
-
+  //getprescriptionDataCust button returns a slightly modified version of get data function
   $("#get_mypres_data").click(getprescriptionDataCust)
-
+  //destroy button
   $("#burn_token_button").click(burnToken)
 
 });
 
+//function to destroy tokens
 function burnToken(){
   var id = $("#burn_token_id").val();
-
+  //calls function in contract
   contractInstance.methods.destroy(id).send();
-
   }
 
+//function to send the token from your account to pharmacy.
 function transfer(){
   var to = $("#pharmacyaddress_input").val();
   var id = $("#presid_input").val();
-  contractInstance.methods.arrayOfPrescriptionsByAddress(connectedWal_address).call().then(function(res){
-    console.log(res);
-  })
   contractInstance.methods.transferPres( to, id).send();
   $("#pharmacyaddress_input").val("");
   $("#presid_input").val("");
 }
-
+//get the list of ids that are owned by the connected address and display them as clickable buttons on the screen.
 function getmyprescriptions(){
   contractInstance.methods.arrayOfPrescriptionsByAddress(connectedWal_address).call().then(function(res){
-    console.log(res);
-    $("#my_pres_output").text("")
+    $("#my_pres_output").text("");
+    $("#output_cust").text("");
     res.forEach(element => {
 
         document.querySelector("#my_pres_output").innerHTML
@@ -76,6 +85,7 @@ function getmyprescriptions(){
   })
 }
 
+//holds the information in an array before it can be sent to the contract
 function addDatatoArray(){
 
   var name = $("#add_data_name").val();
@@ -91,19 +101,17 @@ function addDatatoArray(){
       $("#add_data_name").val("");
       $("#add_data_drugCode").val("");
       $("#add_data_dosage").val("");
-      console.log(nameArray, codeArray, dosageArray);
     }
 
 
 }
 
+// slightly altered get data function for use on the patients page
 function getprescriptionDataCust(e){
-console.log(e);
   $("#output_cust").text("");
   var id = $(e).attr("value");
 
   contractInstance.methods.getprescriptionData(id).call().then(function(res){
-    console.log(res)
 
       res.forEach(element => {
           document.querySelector("#output_cust").innerHTML
@@ -116,26 +124,26 @@ console.log(e);
   })
 }
 
+//add the presctription data to the id and call the batch function in the contract.
 function addprescriptionData(){
   var address = $("#address_input").val();
   var id = $("#id_input").val();
-
-    console.log(address, id, nameArray, codeArray, dosageArray);
 
   contractInstance.methods.addprescriptionDatatoArrayBatch(address, id, nameArray, codeArray, dosageArray ).send()
   .on("confirmation", function(confirmationNr){
     console.log(confirmationNr);
   })
+  //emptys the arrays
   nameArray = [];
   codeArray = [];
   dosageArray = [];
 }
 
+//get the data from a given id and display it to the screen
 function getprescriptionData(){
   $("#output").text("");
   var id = $("#get_data_id").val();
   contractInstance.methods.getprescriptionData(id).call().then(function(res){
-    console.log(res)
 
       res.forEach(element => {
           document.querySelector("#output").innerHTML
@@ -158,12 +166,14 @@ function getprescriptionData(){
 //   })
 // }
 
+//returns the deployer/owner of the contract
 function getOwner(){
   contractInstance.methods.owner().call().then(function(res){
     $("#owner_address").text(res)
   })
 }
 
+//sets the address to the doctor on contract
 function setDoctor(){
   var _doctor = $("#doc_address_input").val();
   contractInstance.methods.setDoctor(_doctor).send({gasLimit:210000 }).then(function(){
@@ -171,7 +181,7 @@ function setDoctor(){
   })
 }
 
-
+//returns doctor of contract
 function getDoctor(){
   contractInstance.methods.doctor().call().then(function(res){
     $("#doc_address_output").text(res);
@@ -179,6 +189,7 @@ function getDoctor(){
   })
 }
 
+//shows number of prescriptions minted
 function totalSupply(){
   contractInstance.methods.totalSupply().call().then(function(res){
     $("#pres_num_output").text(res);

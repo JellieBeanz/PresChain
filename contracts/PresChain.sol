@@ -208,18 +208,22 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
     function destroy(uint256 _id) public {
         Data[] memory _array = getprescriptionData(_id);
         address owner = msg.sender;
-
+        //requirements
         require(ownerOf(_id) == owner, "CryptoPres: burn of token that is not own");
 
+        //reduce the amount of tokens owner has
         ownedTokensCount[owner].decrement();
+        //remove old address for the token
         tokenOwner[_id] = address(0);
 
+        //deal with the mappings
         _removeTokenFromOwnerEnumeration(owner, _id);
         // Since tokenId will be deleted, we can clear its slot in _ownedTokensIndex to trigger a gas refund
         ownedPrescriptionsIndex[_id] = 0;
 
         _removeTokenFromAllTokensEnumeration(_id);
 
+        //emit the data that was in the Prescription for use in other projects
         emit PrescriptionData(_array);
     }
 
@@ -250,29 +254,41 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
         address from = msg.sender;
 
         require(ownerOf(_tokenId) == from, "CryptoPres: transfer of token that is not own");
+        require(_to != doctor, "CryptoPres: cannot send token to Doctor");
+        require(_to != owner, "CryptoPres: cannot send token to contract owner");
         require(_to != address(0), "CryptoPres: transfer to the zero address");
 
+
+        //increase remove the index from one and add to the other
         ownedTokensCount[from].decrement();
         ownedTokensCount[_to].increment();
 
+        //set new owner
         tokenOwner[_tokenId] = _to;
 
+        //deal with the mappings
         _removeTokenFromOwnerEnumeration(from, _tokenId);
         _addTokenToOwnerEnumeration(_to, _tokenId);
 
     }
 
+    //return error if token does not exist
     function _exists(uint256 tokenId) internal view returns (bool) {
         address owner = tokenOwner[tokenId];
         return owner != address(0);
     }
 
+    //return the owner of the token id
      function ownerOf(uint256 tokenId) public view returns (address) {
         address owner = tokenOwner[tokenId];
         require(owner != address(0), "CryptoPres: owner query for nonexistent token");
 
         return owner;
     }
+
+    /*
+    * adding the token to the Owned prescriptions of the owner
+    */
 
     function _addTokenToOwnerEnumeration(address to, uint256 tokenId) private {
         ownedPrescriptionsIndex[tokenId] = ownedPrescriptions[to].length;
@@ -299,6 +315,8 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
      */
 
     function _mint(address _to, uint256 _id) internal {
+        require(_to != msg.sender, "CryptoPres: you cannot send yourself a prescription");
+        require(_to != owner, "CryptoPres: you cannot send contract owner a prescription");
 
         _addTokenToAllTokensEnumeration(_id);
 
@@ -312,6 +330,10 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
 
     }
+
+    /**
+    *   ERC721 standard for adding and removing data from and to mappings correctly.
+    */
 
     function _removeTokenFromOwnerEnumeration(address from, uint256 tokenId) private {
         // To prevent a gap in from's tokens array, we store the last token in the index of the token to delete, and
@@ -335,9 +357,17 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
         // lastTokenId, or just over the end of the array if the token was the last one).
     }
 
+    /**
+    *   This function is used to batch together some functions to reduce the transaction costs and quantity.
+    *   The function creates the token and mints it to the address of the customer - then generates the data from arrays to collect them into a single array and add that data to the token.
+    *   All in one transaction
+    */
 
     function addprescriptionDatatoArrayBatch(address _to, uint _presId, string[] memory _drugName, string[] memory _drugCode, string[] memory _dosage) public onlyDoctor{
+        //requirements
         require(_drugName.length == _drugCode.length && _drugCode.length == _dosage.length, "all arrays must be same length");
+        require(msg.sender != _to, "CryptoPres: cannot send self a token");
+        //call the mint function (create the token generate the data and push data to the token.)
         _mint(_to, _presId);
        for (uint i=0; i<_drugName.length; i++) {
            addprescriptionDatatoArray(_drugName[i], _drugCode[i], _dosage[i]);
@@ -345,23 +375,38 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
         addprescriptionData(_presId);
     }
 
+    //collect information from single arrays into an array of structs
     function addprescriptionDatatoArray(string memory _drugName, string memory _drugCode, string memory _dosage) internal onlyDoctor{
+        bytes memory tempEmptyStringTest = bytes(_drugName); // Uses memory
+        bytes memory tempEmptyStringTest1 = bytes(_drugCode); // Uses memory
+        bytes memory tempEmptyStringTest2 = bytes(_dosage); // Uses memory
+        //Testing to make sure that there are no null values
+        require(tempEmptyStringTest.length != 0,"CryptoPres: entry cannot be null");
+        require(tempEmptyStringTest1.length != 0,"CryptoPres: entry cannot be null");
+        require(tempEmptyStringTest2.length != 0,"CryptoPres: entry cannot be null");
+
+        //create data struct
         Data memory d = Data(_drugName,_drugCode,_dosage);
+        //push d to the global dataArray
         dataArray.push(d);
     }
 
 
     function addprescriptionData(uint _presId) internal onlyDoctor{
-
-            require(doctor == msg.sender,"addprescriptionData");
-
+        //requirements
+        require(_exists(_presId),"CryptoPres: ID does not exist");
+        require(doctor == msg.sender,"CryptoPres: only Docor can call this function");
+            //add prescriptionData to mapping of ID
             prescriptionData[_presId] = dataArray;
+            //empty the array
             delete dataArray;
 
     }
 
     function getprescriptionData(uint _presId) public view returns(Data[] memory _array){
-        require(_exists(_presId),"getprescriptionData");
+        //make sure the id exists
+        require(_exists(_presId),"CryptoPres: ID does not exist");
+        //get the array of drugs from the id and return
         _array = prescriptionData[_presId];
     }
 

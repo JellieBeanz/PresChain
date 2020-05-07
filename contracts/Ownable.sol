@@ -66,6 +66,7 @@ contract Ownable {
       * @param _doctor The doctor address.
       */
      function setDoctor(address _doctor) public onlyOwner {
+         require(_doctor != owner, "Ownable: Owner cannot set themselves as doctor");
          require(_doctor != address(0));
          doctor = _doctor;
      }
