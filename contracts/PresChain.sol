@@ -30,7 +30,7 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     mapping(uint256 => uint256) internal ownedPrescriptionsIndex;
 
-    //mapping for transaction
+    //mapping for transaction limit
     mapping(uint256 => bool) internal isTransferrable;
 
     // Mapping from owner to number of owned token
