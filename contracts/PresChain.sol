@@ -30,6 +30,9 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
     mapping(uint256 => uint256) internal ownedPrescriptionsIndex;
 
+    //mapping for transaction
+    mapping(uint256 => bool) internal isTransferrable;
+
     // Mapping from owner to number of owned token
     mapping (address => Counters.Counter) private ownedTokensCount;
 
@@ -251,6 +254,7 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
 
 
     function transferPres(address _to, uint256 _tokenId) public{
+        require(isTransferrable[_tokenId], "CryptoPres: Cannot send this token more than once!");
         address from = msg.sender;
 
         require(ownerOf(_tokenId) == from, "CryptoPres: transfer of token that is not own");
@@ -269,6 +273,9 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
         //deal with the mappings
         _removeTokenFromOwnerEnumeration(from, _tokenId);
         _addTokenToOwnerEnumeration(_to, _tokenId);
+
+        //remove the transferablility
+        isTransferrable[_tokenId] = false;
 
     }
 
@@ -398,6 +405,7 @@ contract CryptoPres is  ERC721Full("CryptoPres","PRES"), Ownable {
         require(doctor == msg.sender,"CryptoPres: only Docor can call this function");
             //add prescriptionData to mapping of ID
             prescriptionData[_presId] = dataArray;
+            isTransferrable[_presId] = true;
             //empty the array
             delete dataArray;
 

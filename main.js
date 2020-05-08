@@ -22,16 +22,16 @@ $(document).ready(function() {
       $("#connectedWal_address").text(connectedWal_address)
   });
 
-  var burnEvent = contractInstance.PrescriptionData();
-
-  burnEvent.watch(function(error, result){
-    if(!error){
-      $("#dataoutput").html(result.toString());
-    }
-    else{
-      console.log(error);
-    }
-  });
+  // var burnEvent = contractInstance.PrescriptionData();
+  //
+  // burnEvent.watch(function(error, result){
+  //   if(!error){
+  //     $("#dataoutput").html(result.toString());
+  //   }
+  //   else{
+  //     console.log(error);
+  //   }
+  // });
 
   //prescription number button
   $("#pres_num_button").click(totalSupply)
