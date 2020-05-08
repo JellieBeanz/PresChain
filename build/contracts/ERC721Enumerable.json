@@ -984,10 +984,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2742,
-                        2743
+                        2765,
+                        2766
                       ],
-                      "referencedDeclaration": 2743,
+                      "referencedDeclaration": 2766,
                       "src": "1910:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1396,10 +1396,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2742,
-                        2743
+                        2765,
+                        2766
                       ],
-                      "referencedDeclaration": 2743,
+                      "referencedDeclaration": 2766,
                       "src": "2721:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1622,7 +1622,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2774,
+                        "referencedDeclaration": 2797,
                         "src": "3312:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_super$_ERC721Enumerable_$1205",
@@ -1965,7 +1965,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2774,
+                        "referencedDeclaration": 2797,
                         "src": "3800:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_super$_ERC721Enumerable_$1205",
@@ -2264,7 +2264,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2774,
+                        "referencedDeclaration": 2797,
                         "src": "4289:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_super$_ERC721Enumerable_$1205",
@@ -3381,7 +3381,7 @@
                       "lValueRequested": false,
                       "memberName": "sub",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 2580,
+                      "referencedDeclaration": 2603,
                       "src": "6702:29:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -4077,7 +4077,7 @@
                       "lValueRequested": false,
                       "memberName": "sub",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 2580,
+                      "referencedDeclaration": 2603,
                       "src": "8132:21:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -5190,10 +5190,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2742,
-                        2743
+                        2765,
+                        2766
                       ],
-                      "referencedDeclaration": 2743,
+                      "referencedDeclaration": 2766,
                       "src": "1910:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -5602,10 +5602,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2742,
-                        2743
+                        2765,
+                        2766
                       ],
-                      "referencedDeclaration": 2743,
+                      "referencedDeclaration": 2766,
                       "src": "2721:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -5828,7 +5828,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2774,
+                        "referencedDeclaration": 2797,
                         "src": "3312:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_super$_ERC721Enumerable_$1205",
@@ -6171,7 +6171,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2774,
+                        "referencedDeclaration": 2797,
                         "src": "3800:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_super$_ERC721Enumerable_$1205",
@@ -6470,7 +6470,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2774,
+                        "referencedDeclaration": 2797,
                         "src": "4289:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_super$_ERC721Enumerable_$1205",
@@ -7587,7 +7587,7 @@
                       "lValueRequested": false,
                       "memberName": "sub",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 2580,
+                      "referencedDeclaration": 2603,
                       "src": "6702:29:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -8283,7 +8283,7 @@
                       "lValueRequested": false,
                       "memberName": "sub",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 2580,
+                      "referencedDeclaration": 2603,
                       "src": "8132:21:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -8800,7 +8800,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-05-07T21:09:05.781Z",
+  "updatedAt": "2020-05-08T17:41:26.123Z",
   "devdoc": {
     "details": "See https://eips.ethereum.org/EIPS/eip-721",
     "methods": {

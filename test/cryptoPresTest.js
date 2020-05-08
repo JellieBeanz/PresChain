@@ -137,6 +137,11 @@ contract("CryptoPres", async function(accounts){
     let doctor = await instance.doctor();
     await truffleAssert.passes(instance.transferPres(accounts[4], 3, {from:ownerOfToken}));
   });
+  it("Cannot be sent more than once", async function(){
+    let instance = await PresChain.deployed();
+    let ownerOfToken = await instance.ownerOf(3);
+    await truffleAssert.fails(instance.transferPres(accounts[5], 3, {from:ownerOfToken}), truffleAssert.ErrorType.Revert);
+  });
   it("cannot be sent to a null address", async function(){
     let instance = await PresChain.deployed();
     let ownerOfToken = await instance.ownerOf(3);
@@ -158,7 +163,7 @@ contract("CryptoPres", async function(accounts){
     let ownerOfToken = await instance.ownerOf(3);
     await truffleAssert.fails(instance.destroy(1, {from:ownerOfToken}), truffleAssert.ErrorType.Revert);
   });
-  it("can only destroy owned tokens", async function(){
+  it("can only destroy owned tokens 2", async function(){
     let instance = await PresChain.deployed();
     let ownerOfToken = await instance.ownerOf(3);
     await truffleAssert.passes(instance.destroy(3, {from:ownerOfToken}));
