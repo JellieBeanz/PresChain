@@ -8,7 +8,7 @@ var dosageArray = [];
 $(document).ready(function() {
   window.ethereum.enable().then(function(accounts){
     //declare the contract address
-    var contractAddress = "0xB3d33108Ef2B4c7979111D85b8Fe13593FA90686"
+    var contractAddress = "0xc38bBFf132237622Cb3A10f6d5Bdf8De1cC7eaCf"
       //connect to the contract pass in the abi(methods from contract declared in HTML head) contract address and the account that deployed
       connectedWal_address = accounts[0];
       //the contract ie. the contract owner now.
