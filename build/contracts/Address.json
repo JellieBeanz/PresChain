@@ -142,20 +142,20 @@
                 {
                   "externalReferences": [
                     {
-                      "codehash": {
-                        "declaration": 9,
-                        "isOffset": false,
-                        "isSlot": false,
-                        "src": "1224:8:0",
-                        "valueSize": 1
-                      }
-                    },
-                    {
                       "account": {
                         "declaration": 3,
                         "isOffset": false,
                         "isSlot": false,
                         "src": "1248:7:0",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "codehash": {
+                        "declaration": 9,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1224:8:0",
                         "valueSize": 1
                       }
                     }
@@ -1200,20 +1200,20 @@
                 {
                   "externalReferences": [
                     {
-                      "codehash": {
-                        "declaration": 9,
-                        "isOffset": false,
-                        "isSlot": false,
-                        "src": "1224:8:0",
-                        "valueSize": 1
-                      }
-                    },
-                    {
                       "account": {
                         "declaration": 3,
                         "isOffset": false,
                         "isSlot": false,
                         "src": "1248:7:0",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "codehash": {
+                        "declaration": 9,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1224:8:0",
                         "valueSize": 1
                       }
                     }
@@ -2130,7 +2130,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-05-08T17:41:26.060Z",
+  "updatedAt": "2020-05-10T14:38:45.794Z",
   "devdoc": {
     "details": "Collection of functions related to the address type",
     "methods": {}
